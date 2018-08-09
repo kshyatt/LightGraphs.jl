@@ -7,7 +7,7 @@ struct DijkstraState{T <: Real,U <: Integer} <: AbstractPathState
     parents::Vector{U}
     dists::Vector{T}
     predecessors::Vector{Vector{U}}
-    pathcounts::Vector{U}
+    pathcounts::Vector{UInt}
     closest_vertices::Vector{U}
 end
 
@@ -40,7 +40,7 @@ function dijkstra_shortest_paths(g::AbstractGraph,
     parents = zeros(U, nvg)
     visited = zeros(Bool, nvg)
 
-    pathcounts = zeros(Int, nvg)
+    pathcounts = zeros(UInt, nvg)
     preds = fill(Vector{U}(), nvg)
     H = PriorityQueue{U,T}()
     # fill creates only one array.
@@ -108,6 +108,13 @@ function dijkstra_shortest_paths(g::AbstractGraph,
         parents[src] = 0
         empty!(preds[src])
     end
+
+    println("----- srcs = ", srcs)
+    println("parents = ", typeof(parents))
+    println("dists = ", typeof(dists))
+    println("preds = ", typeof(preds))
+    println("pathcounts = ", typeof(pathcounts))
+    println("closest_vertices = ", typeof(closest_vertices))
 
     return DijkstraState{T,U}(parents, dists, preds, pathcounts, closest_vertices)
 end
