@@ -40,6 +40,8 @@ function SimpleGraph{T}(adjmx::AbstractMatrix) where T <: Integer
     return g
 end
 
+SimpleGraph(g::SimpleGraph) = copy(g)
+
 # converts Graph{Int} to Graph{Int32}
 function SimpleGraph{T}(g::SimpleGraph) where T <: Integer
     h_fadj = [Vector{T}(x) for x in fadj(g)]
